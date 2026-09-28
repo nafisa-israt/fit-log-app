@@ -89,6 +89,8 @@ export default function WorkoutDetails() {
     );
 
     setIsAdded(true);
+
+    window.dispatchEvent(new Event("fitlog-storage"));
   };
 
   // Save for Later
@@ -113,6 +115,7 @@ export default function WorkoutDetails() {
     );
 
     setIsSaved(true);
+    window.dispatchEvent(new Event("fitlog-storage"));
   };
 
   // Loading

@@ -13,8 +13,11 @@ export default function Navbar() {
   const [savedCount, setSavedCount] = useState(0);
 
   const updateCounts = () => {
-    const plan = JSON.parse(localStorage.getItem("fitlog-plan")) || [];
-    const saved = JSON.parse(localStorage.getItem("fitlog-saved")) || [];
+    const plan =
+      JSON.parse(localStorage.getItem("fitlog-plan")) || [];
+
+    const saved =
+      JSON.parse(localStorage.getItem("fitlog-saved")) || [];
 
     setPlanCount(plan.length);
     setSavedCount(saved.length);
@@ -24,9 +27,11 @@ export default function Navbar() {
     updateCounts();
 
     window.addEventListener("storage", updateCounts);
+    window.addEventListener("fitlog-storage", updateCounts);
 
     return () => {
       window.removeEventListener("storage", updateCounts);
+      window.removeEventListener("fitlog-storage", updateCounts);
     };
   }, []);
 
@@ -36,7 +41,6 @@ export default function Navbar() {
     <nav className="relative border-b border-[#242830] bg-[#0d0f12]">
       <div className="container flex min-h-[72px] items-center justify-between">
 
-        {/* Logo */}
         <Link
           href="/"
           onClick={() => setMenuOpen(false)}
@@ -49,9 +53,7 @@ export default function Navbar() {
           </span>
         </Link>
 
-        {/* Desktop Navigation */}
         <div className="hidden items-center gap-8 sm:flex">
-
           <Link
             href="/"
             className={`text-sm transition ${
@@ -73,31 +75,26 @@ export default function Navbar() {
           >
             My Plan
           </Link>
-
         </div>
 
-        {/* Counters */}
         <div className="hidden items-center gap-2 sm:flex">
 
           <Link
             href="/my-plan"
             className="flex items-center gap-2 rounded-full bg-[#ccff00] px-3 py-1 text-xs font-bold text-black hover:bg-white"
           >
-            PLAN
-            <span>{planCount}</span>
+            PLAN <span>{planCount}</span>
           </Link>
 
           <Link
             href="/my-plan"
             className="flex items-center gap-2 rounded-full border border-[#ccff00] px-3 py-1 text-xs font-bold text-[#ccff00] hover:bg-[#ccff00] hover:text-black"
           >
-            SAVED
-            <span>{savedCount}</span>
+            SAVED <span>{savedCount}</span>
           </Link>
 
         </div>
 
-        {/* Mobile Menu Button */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
           className="sm:hidden"
@@ -106,10 +103,8 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile Menu */}
       {menuOpen && (
         <div className="border-t border-[#242830] bg-[#111419] px-5 py-5 sm:hidden">
-
           <div className="flex flex-col gap-5">
 
             <Link
